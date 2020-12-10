@@ -1,0 +1,341 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.knd-newbie-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 80px !important;
+    background-color: white;
+    box-shadow: 0 -2px 5px -2px rgba(0, 0, 0, 0.75);
+}
+
+.knd-newbie-nav > .knd-newbie-list > li > img {
+    width: 100px;
+}
+
+.knd-newbie-nav > .knd-newbie-list {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+}
+
+.knd-newbie-nav > .knd-newbie-list:first-child > li {
+    margin-right: 0.50rem;
+}
+
+.knd-newbie-nav > .knd-newbie-list > .knd-newbie-link {
+    display: inline-block;
+    padding: 0.50rem;
+    background-color: white;
+    box-shadow: 0 -2px 5px -2px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    width: 100px;
+    text-align: center;
+    margin-left: 0.40rem;
+    cursor: pointer;
+}
+
+.knd-newbie-link > a {
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    color: black;
+}
+
+
+@media only screen and (min-width: 594px) {
+    .knd-newbie-list:first-child > .knd-newbie-link:last-child {
+        display: block;
+    }
+    .knd-newbie-list:nth-child(2) {
+        display: block;
+    }
+    .knd-newbie-list:nth-child(3) {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 627px) {
+    .knd-newbie-list:first-child > .knd-newbie-link:last-child {
+        display: none;
+    }
+    .knd-newbie-list:nth-child(2) {
+        display: none;
+    }
+    .knd-newbie-list:nth-child(3) {
+        display: block;
+    }
+}
+
+/* Form Auth */
+
+.vs-input {
+    width: 100% !important;
+}
+
+@media screen and (max-width: 320px) {
+    .vs-input {
+        width: 180px !important;
+    }
+}
+
+#knd-form {
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+    background-color: white;
+
+}
+
+@media only screen and (max-width: 999px) {
+    #knd-form {
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 540px) and (min-width: 414px) {
+    #knd-form {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 413px) {
+    #knd-form {
+        width: 60%;
+    }
+}
+
+.knd-newbie-field {
+    margin-bottom: 0.50rem;
+}
+
+.knd-newbie-field-label {
+    font-family: 'Roboto', sans-serif;
+}
+
+.knd-newbie-input {
+    margin-top: 0.30rem;
+}
+
+.knd-newbie-field-anchor {
+    text-decoration: none;
+    color: #0d6efd;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+.knd-newbie-field-group {
+    display: flex;
+    margin-top: 0.50rem;
+    align-items: center;
+}
+
+.knd-newbie-field-group > .vs-button {
+    margin-left: 0;
+    margin-right: 0.50rem;
+    margin-top: 0.40rem;
+}
+
+.knd-newbie-field-title {
+    text-align: center;
+}
+
+.knd-newbie-field > caption {
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+}
+
+/* dashboard */
+.knd-newbie-header-dash {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 0.40rem;
+    padding-right: 0.40rem;
+}
+
+.knd-newbie-header-dash > ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+}
+
+.knd-newbie-header-dash > ul > li {
+    display: inline-block;
+}
+
+.knd-newbie-header-dash > ul:first-child > li > h1 {
+    text-transform: uppercase;
+    color: gray;
+}
+
+.knd-newbie-header-dash > ul:first-child > li:last-child {
+    text-transform: capitalize;
+    margin-left: 0.40rem;
+}
+
+
+table {
+    width: 100%;;
+    border-collapse:collapse;
+    overflow: auto;
+}
+
+table > thead {
+    background-color: white;;
+    box-shadow: 0 -2px 5px -2px rgba(0, 0, 0, 0.75);
+    background-color: #1c59f6;
+    color: white;
+}
+
+table > thead > tr,
+table > tbody > tr {
+    height: 50px;
+}
+
+table > tbody {
+    background-color: white;
+    width: 100%;
+}
+
+table > tr  {
+    text-align: center;;
+}
+
+tbody > tr > td {
+    padding: 0.30rem;
+    text-align: center;
+    overflow: auto;
+}
+
+tbody > tr > td:nth-child(4) {
+    max-width: 200px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+table > tbody > tr:hover {
+    background-color: gray;
+    cursor: pointer;
+}
+
+.knd-newbie-table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.knd-newbie-table-footer > ul {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+}
+
+.knd-newbie-list-links {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+}
+
+.knd-newbie-opx {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* position: relative; */
+}
+
+.knd-newbie-dropdown {
+    /* display: none; */
+}
+
+.knd-newbie-dropdown > .knd-newbie-dropdown-content {
+    /* position: absolute; */
+    right: 0;
+    z-index: 1000;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 -2px 5px -2px rgba(0, 0, 0, 0.75);
+}
+
+.knd-newbie-dropdown > .knd-newbie-dropdown-content > div > .vs-button{
+    width: 100%;
+}
+
+.knd-newbie-field-group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.knd-newbie-field-group > .knd-newbie-field  {
+    width: 40% !important;
+    margin-left: 0.20rem;
+    margin-right: 0.20rem;
+}
+
+textarea {
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: #f4f7f8;
+    border-radius: 10px;
+    padding: 1rem;
+    resize: none;
+}
+
+#knd-newbie-record {
+    width: 80%;
+    margin: auto;
+}
+
+.knd-newbie-filter {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.50rem;
+}
+
+.knd-newbie-filter > div:last-child {
+    width: 500px;
+}
+
+#ope-dropdown {
+    position: absolute;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 !important;
+}
+
+.knd-newbie-dropdown > .knd-newbie-dropdown-contents {
+    /* position: absolute; */
+    right: 0;
+    z-index: 1000;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 -2px 5px -2px rgba(0, 0, 0, 0.75);
+}
