@@ -15448,7 +15448,7 @@ var render = function() {
           return _c("tr", { key: purse.id }, [
             _c("td", [_vm._v(_vm._s(purse.id))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(purse.user_id.username))]),
+            _c("td", [_vm._v(_vm._s(purse.name))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(purse.reference))]),
             _vm._v(" "),
@@ -60261,6 +60261,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 var state = {
     purse: {
         id: 0,
+        name: '',
         reference: '',
         description: '',
         create_at: '',

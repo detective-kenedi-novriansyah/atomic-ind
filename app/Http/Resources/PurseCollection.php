@@ -20,6 +20,7 @@ class PurseCollection extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'status' => $this->status,
             'reference' => $this->reference,
             'description' => $this->description,

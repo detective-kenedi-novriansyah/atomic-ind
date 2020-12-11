@@ -10,6 +10,7 @@ export interface User {
 
 export interface Purse {
     id: number;
+    name: string;
     reference: string;
     description: string;
     status: boolean | number;

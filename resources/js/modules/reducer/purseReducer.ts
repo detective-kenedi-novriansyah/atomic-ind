@@ -4,6 +4,7 @@ import { Purse, PurseActiveState, PurseData, PurseGetters, PurseMutations, Purse
 const state: PurseState = {
     purse: {
         id: 0,
+        name: '',
         reference: '',
         description: '',
         create_at: '',

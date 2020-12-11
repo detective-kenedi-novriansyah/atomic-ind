@@ -68,7 +68,7 @@
           <tbody>
               <tr v-for="purse in allPurse.allPurse" :key="purse.id">
                   <td>{{purse.id}}</td>
-                  <td>{{purse.user_id.username}}</td>
+                  <td>{{purse.name}}</td>
                   <td>{{purse.reference}}</td>
                   <td>{{purse.description}}</td>
                   <td v-if="purse.status">Active</td>
