@@ -54,6 +54,7 @@ class PurseController extends Controller
     public function store(Request $request)
     {
         $validators = Validator::make($request->all(), [
+            'name' => 'required',
             'reference' => 'required',
             'description' => 'required|max:100',
         ]);
@@ -64,6 +65,7 @@ class PurseController extends Controller
         }
         $create = Purse::create([
             'user_id' => User::find($request->user_id)->id,
+            'name' => $request->name,
             'status' => $request->status,
             'reference' => $request->reference,
             'description' => $request->description,

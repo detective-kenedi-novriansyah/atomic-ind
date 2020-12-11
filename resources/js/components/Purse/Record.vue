@@ -19,7 +19,7 @@
             <div class="knd-newbie-field-group">
                 <div class="knd-newbie-field">
                     <label for="username" class="knd-newbie-field-label">Name</label>
-                    <vs-input type="text" :v-model="username = userDetail.username" disabled="true" placeholder="Username" class="knd-newbie-input">
+                    <vs-input type="text" v-model="name" placeholder="Username" class="knd-newbie-input">
                     </vs-input>
                 </div>
                 <div class="knd-newbie-field">
@@ -61,7 +61,7 @@ import { RecordPurseMessage } from '../../modules/types/interface';
     computed: mapGetters(['userDetail'])
 })
 export default class Record extends Vue {
-    username: string = '';
+    name: string = '';
     reference: string = '';
     description: string = '';
     status: number| string = 'Active';
@@ -69,6 +69,7 @@ export default class Record extends Vue {
     $vs: any;
     onSubmit() {
         const data = {
+            name: this.name,
             user_id: this.userDetail.id,
             status: this.status,
             reference: this.reference,

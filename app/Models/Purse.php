@@ -13,6 +13,7 @@ class Purse extends Model
     protected $table = "purse";
 
     protected $fillable = [
+        "name",
         "reference",
         "description",
         "status",

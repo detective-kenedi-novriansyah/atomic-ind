@@ -14376,7 +14376,7 @@ var Record = /** @class */ (function (_super) {
     __extends(Record, _super);
     function Record() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.username = '';
+        _this.name = '';
         _this.reference = '';
         _this.description = '';
         _this.status = 'Active';
@@ -14386,6 +14386,7 @@ var Record = /** @class */ (function (_super) {
     Record.prototype.onSubmit = function () {
         var _this = this;
         var data = {
+            name: this.name,
             user_id: this.userDetail.id,
             status: this.status,
             reference: this.reference,
@@ -15869,11 +15870,13 @@ var render = function() {
               _vm._v(" "),
               _c("vs-input", {
                 staticClass: "knd-newbie-input",
-                attrs: {
-                  type: "text",
-                  "v-model": (_vm.username = _vm.userDetail.username),
-                  disabled: "true",
-                  placeholder: "Username"
+                attrs: { type: "text", placeholder: "Username" },
+                model: {
+                  value: _vm.name,
+                  callback: function($$v) {
+                    _vm.name = $$v
+                  },
+                  expression: "name"
                 }
               })
             ],
