@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\PurseController;
 
 /*
@@ -54,3 +55,5 @@ Route::post('v1/category/active/{category}', [CategoryController::class, 'active
 Route::put('v1/category/{category}', [CategoryController::class, 'update']);
 Route::delete('v1/category/{category}', [CategoryController::class, 'destroy']);
 Route::get('v1/category/{category}', [CategoryController::class, 'show']);
+
+Route::get('v1/export/excel', [ExportController::class, 'export']);

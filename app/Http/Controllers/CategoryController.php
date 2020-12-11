@@ -63,7 +63,7 @@ class CategoryController extends Controller
     {
         $validators = Validator::make($request->all(), [
             'code' => 'required',
-            'description' => 'required',
+            'description' => 'required|max:100',
             'category' => 'required',
             'value' => 'required',
             'user_id' => 'required',

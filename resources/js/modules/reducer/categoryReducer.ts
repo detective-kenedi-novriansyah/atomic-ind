@@ -83,6 +83,19 @@ const actions = {
         })
         return response
     },
+    async exportExcel({commit}: any) {
+        const response = await axios.get('api/v1/export/excel', {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST',
+                'Access-Control-Allow-Headers': 'Content-Type, Origin, Accept, Authorization, X-Requested-With',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            responseType: 'blob',
+        })
+        return response
+    },
 }
 
 const mutations: CategoryMutations = {

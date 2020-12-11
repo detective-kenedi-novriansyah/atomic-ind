@@ -48,6 +48,9 @@
           <div class="knd-newbie-input-search">
             <vs-input type="text" placeholder="Search" v-model="search"></vs-input>
           </div>
+          <vs-button v-on:click="ExportExcel()">
+              Export Excel
+          </vs-button>
       </div>
       <div class="knd-newbie-table">
       <table>
@@ -129,6 +132,9 @@ export default class Transaction extends Vue {
             })
         })
         // purseActive
+    }
+    ExportExcel() {
+        this.$store.dispatch('exportExcel')
     }
     onChangePage(newUrl: string) {
         if(newUrl) {
