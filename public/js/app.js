@@ -14230,6 +14230,14 @@ var Dashboard = /** @class */ (function (_super) {
         var check = document.getElementById('ope-dropdown-active');
         check.id = "ope-dropdown";
     };
+    Dashboard.prototype.onUpdatePurse = function (newValue) {
+        var _this = this;
+        this.$store.dispatch('retrievePurse', newValue).then(function (res) {
+            _this.$store.commit('DETAIL_PURSE', res.data.data);
+            localStorage.setItem('sst', res.data.data.id);
+            _this.$router.push('/update/purse');
+        });
+    };
     Dashboard.prototype.mounted = function () {
         this.$store.dispatch('fetchPurse');
     };
@@ -14376,6 +14384,8 @@ var Record = /** @class */ (function (_super) {
     __extends(Record, _super);
     function Record() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.retrieve = false;
+        _this.id = 0;
         _this.name = '';
         _this.reference = '';
         _this.description = '';
@@ -14386,6 +14396,7 @@ var Record = /** @class */ (function (_super) {
     Record.prototype.onSubmit = function () {
         var _this = this;
         var data = {
+            id: this.id,
             name: this.name,
             user_id: this.userDetail.id,
             status: this.status,
@@ -14393,31 +14404,77 @@ var Record = /** @class */ (function (_super) {
             description: this.description,
         };
         this.loading = true;
-        this.$store.dispatch('recordPurse', data).then(function (res) {
-            _this.reference = '';
-            _this.description = '';
-            _this.status = '';
-            _this.$router.push('/');
-            _this.$vs.notification({
-                color: 'success',
-                position: 'bottom-center',
-                title: 'Successfully',
-                text: res.data.message
+        if (this.retrieve) {
+            this.$store.dispatch('updatePurse', data).then(function (res) {
+                _this.reference = '';
+                _this.description = '';
+                _this.status = '';
+                _this.$store.commit('SET_PURSE', res.data.data);
+                _this.$router.push('/');
+                _this.$vs.notification({
+                    color: 'success',
+                    position: 'bottom-center',
+                    title: 'Successfully',
+                    text: res.data.message
+                });
+                _this.loading = false;
+            }).catch(function (err) {
+                _this.$vs.notification({
+                    color: 'danger',
+                    position: 'bottom-center',
+                    title: 'Failured',
+                    text: _modules_types_interface__WEBPACK_IMPORTED_MODULE_2__["RecordPurseMessage"].constructors(err)
+                });
+                _this.loading = false;
             });
-            _this.loading = false;
-        }).catch(function (err) {
-            _this.$vs.notification({
-                color: 'danger',
-                position: 'bottom-center',
-                title: 'Failured',
-                text: _modules_types_interface__WEBPACK_IMPORTED_MODULE_2__["RecordPurseMessage"].constructors(err)
+        }
+        else {
+            this.$store.dispatch('recordPurse', data).then(function (res) {
+                _this.reference = '';
+                _this.description = '';
+                _this.status = '';
+                _this.$router.push('/');
+                _this.$vs.notification({
+                    color: 'success',
+                    position: 'bottom-center',
+                    title: 'Successfully',
+                    text: res.data.message
+                });
+                _this.loading = false;
+            }).catch(function (err) {
+                _this.$vs.notification({
+                    color: 'danger',
+                    position: 'bottom-center',
+                    title: 'Failured',
+                    text: _modules_types_interface__WEBPACK_IMPORTED_MODULE_2__["RecordPurseMessage"].constructors(err)
+                });
+                _this.loading = false;
             });
-            _this.loading = false;
-        });
+        }
+    };
+    Record.prototype.created = function () {
+        var _this = this;
+        if (localStorage.getItem('sst')) {
+            this.$store.dispatch('retrievePurse', localStorage.getItem('sst')).then(function (res) {
+                _this.$store.commit('DETAIL_PURSE', res.data.data);
+                _this.id = res.data.data.id;
+                _this.name = res.data.data.name;
+                _this.description = res.data.data.description;
+                _this.status = res.data.data.status;
+                _this.retrieve = true;
+            }).catch(function (err) {
+                _this.$vs.notification({
+                    color: 'danger',
+                    position: 'bottom-center',
+                    title: 'Failured',
+                    text: err.response.error
+                });
+            });
+        }
     };
     Record = __decorate([
         Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['userDetail'])
+            computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['userDetail', 'detailPurse'])
         })
     ], Record);
     return Record;
@@ -15490,7 +15547,7 @@ var render = function() {
                     _c("div", { staticClass: "knd-newbie-dropdown-content" }, [
                       _c("div", [
                         _vm._v(
-                          "\n                                Checkout\n                            "
+                          "\n                                Spending\n                            "
                         )
                       ]),
                       _vm._v(" "),
@@ -15509,11 +15566,21 @@ var render = function() {
                       _c(
                         "div",
                         [
-                          _c("vs-button", [
-                            _vm._v(
-                              "\n                                    Update\n                                "
-                            )
-                          ])
+                          _c(
+                            "vs-button",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.onUpdatePurse(purse.id)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                    Update\n                                "
+                              )
+                            ]
+                          )
                         ],
                         1
                       ),
@@ -15883,33 +15950,35 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "knd-newbie-field" },
-            [
-              _c(
-                "label",
-                {
-                  staticClass: "knd-newbie-field-label",
-                  attrs: { for: "password" }
-                },
-                [_vm._v("Reference")]
-              ),
-              _vm._v(" "),
-              _c("vs-input", {
-                staticClass: "knd-newbie-input",
-                attrs: { type: "text", placeholder: "Reference" },
-                model: {
-                  value: _vm.reference,
-                  callback: function($$v) {
-                    _vm.reference = $$v
-                  },
-                  expression: "reference"
-                }
-              })
-            ],
-            1
-          )
+          !_vm.detailPurse.reference
+            ? _c(
+                "div",
+                { staticClass: "knd-newbie-field" },
+                [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "knd-newbie-field-label",
+                      attrs: { for: "password" }
+                    },
+                    [_vm._v("Reference")]
+                  ),
+                  _vm._v(" "),
+                  _c("vs-input", {
+                    staticClass: "knd-newbie-input",
+                    attrs: { type: "text", placeholder: "Reference" },
+                    model: {
+                      value: _vm.reference,
+                      callback: function($$v) {
+                        _vm.reference = $$v
+                      },
+                      expression: "reference"
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "knd-newbie-field" }, [
@@ -60409,7 +60478,63 @@ var actions = {
                 }
             });
         });
-    }
+    },
+    retrievePurse: function (_a, newData) {
+        var commit = _a.commit;
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("api/v1/purse/" + newData, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*',
+                                'Access-Control-Allow-Methods': 'GET',
+                                'Access-Control-Allow-Headers': 'Content-Type, Origin, Accept, Authorization, X-Requested-With',
+                                'Authorization': "Bearer " + localStorage.getItem('token')
+                            },
+                            timeout: 865000,
+                            responseType: 'json',
+                            withCredentials: false,
+                            maxRedirects: 5,
+                            maxContentLength: 2000,
+                            validateStatus: function (status) { return status >= 200 && status < 300; }
+                        })];
+                    case 1:
+                        response = _b.sent();
+                        return [2 /*return*/, response];
+                }
+            });
+        });
+    },
+    updatePurse: function (_a, newData) {
+        var commit = _a.commit;
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("api/v1/purse/" + newData.id, newData, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*',
+                                'Access-Control-Allow-Methods': 'PUT',
+                                'Access-Control-Allow-Headers': 'Content-Type, Origin, Accept, Authorization, X-Requested-With',
+                                'Authorization': "Bearer " + localStorage.getItem('token')
+                            },
+                            timeout: 865000,
+                            responseType: 'json',
+                            withCredentials: false,
+                            maxRedirects: 5,
+                            maxContentLength: 2000,
+                            validateStatus: function (status) { return status >= 200 && status < 300; }
+                        })];
+                    case 1:
+                        response = _b.sent();
+                        return [2 /*return*/, response];
+                }
+            });
+        });
+    },
 };
 var mutations = {
     LOAD_PURSE: function (purse, data) {
@@ -60441,7 +60566,8 @@ var mutations = {
         });
         purse.allPurse = find;
         return;
-    }
+    },
+    DETAIL_PURSE: function (purse, data) { return (purse.purse = data); }
 };
 var getters = {
     allPurse: function (purse) { return purse; },
@@ -60671,6 +60797,9 @@ var RecordFailure = /** @class */ (function () {
         else if (type.response.data.message.description) {
             return type.response.data.message.description[0];
         }
+        else if (type.response.data.message.name) {
+            return type.response.data.message.name[0];
+        }
     };
     return RecordFailure;
 }());
@@ -60721,7 +60850,8 @@ var routes = [{
         path: '/forgotted/password'
     }, {
         component: _components_Purse_Record_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-        path: '/record/purse'
+        path: '/record/purse',
+        alias: ['/record/purse', '/update/purse']
     }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     routes: routes

@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import { data } from 'jquery'
 import { Purse, PurseActiveState, PurseData, PurseGetters, PurseMutations, PurseState } from '../types/interface'
 
 const state: PurseState = {
@@ -110,7 +111,44 @@ const actions = {
             validateStatus: (status: number) => status >= 201 && status < 300
         })
         return response
-    }
+    },
+    async retrievePurse({commit}: any, newData: number) {
+        const response = await axios.get(`api/v1/purse/${newData}`,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET',
+                'Access-Control-Allow-Headers': 'Content-Type, Origin, Accept, Authorization, X-Requested-With',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            timeout: 865000,
+            responseType: 'json',
+            withCredentials: false,
+            maxRedirects: 5,
+            maxContentLength: 2000,
+            validateStatus: (status: number) => status >= 200 && status < 300
+        })
+        return response
+    },
+    async updatePurse({commit}: any, newData: Purse) {
+        const response = await axios.put(`api/v1/purse/${newData.id}`,newData,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'PUT',
+                'Access-Control-Allow-Headers': 'Content-Type, Origin, Accept, Authorization, X-Requested-With',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            timeout: 865000,
+            responseType: 'json',
+            withCredentials: false,
+            maxRedirects: 5,
+            maxContentLength: 2000,
+            validateStatus: (status: number) => status >= 200 && status < 300
+        })
+        return response
+    },
 }
 
 const mutations: PurseMutations = {
@@ -143,7 +181,8 @@ const mutations: PurseMutations = {
         })
         purse.allPurse = find
         return;
-    }
+    },
+    DETAIL_PURSE: (purse: PurseState | any, data: Purse) => (purse.purse = data)
 }
 
 const getters: PurseGetters = {

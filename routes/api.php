@@ -41,6 +41,6 @@ Route::get('v1/purse', [PurseController::class, 'index']);
 
 Route::post('v1/purse', [PurseController::class, 'store']);
 Route::post('v1/purse/active/{purse}', [PurseController::class, 'active'])->name('active');
-// // Route::put('v1/purse/{purse}', [PurseController::class, 'update'])->name('update');
+Route::put('v1/purse/{purse}', [PurseController::class, 'update'])->name('update');
 // // Route::delete('v1/purse/{purse}', [PurseController::class, 'destroy'])->name('destroy');
-// // Route::get('v1/purse/{purse}', [PurseController::class, 'show'])->name('detail');
+Route::get('v1/purse/{purse}', [PurseController::class, 'show'])->name('detail');

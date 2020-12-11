@@ -22,7 +22,7 @@
                     <vs-input type="text" v-model="name" placeholder="Username" class="knd-newbie-input">
                     </vs-input>
                 </div>
-                <div class="knd-newbie-field">
+                <div class="knd-newbie-field" v-if="!detailPurse.reference">
                     <label for="password" class="knd-newbie-field-label">Reference</label>
                     <vs-input type="text" v-model="reference" placeholder="Reference" class="knd-newbie-input">
                     </vs-input>
@@ -58,9 +58,11 @@ import { Component, Vue} from 'vue-property-decorator'
 import { mapGetters } from 'vuex';
 import { RecordPurseMessage } from '../../modules/types/interface';
 @Component({
-    computed: mapGetters(['userDetail'])
+    computed: mapGetters(['userDetail','detailPurse'])
 })
 export default class Record extends Vue {
+    retrieve: boolean = false;
+    id: number = 0;
     name: string = '';
     reference: string = '';
     description: string = '';
@@ -69,6 +71,7 @@ export default class Record extends Vue {
     $vs: any;
     onSubmit() {
         const data = {
+            id: this.id,
             name: this.name,
             user_id: this.userDetail.id,
             status: this.status,
@@ -76,27 +79,71 @@ export default class Record extends Vue {
             description: this.description,
         }
         this.loading = true;
-        this.$store.dispatch('recordPurse', data).then((res: AxiosResponse) => {
-            this.reference = '';
-            this.description = '';
-            this.status = '';
-            this.$router.push('/')
-            this.$vs.notification({
-                color: 'success',
-                position: 'bottom-center',
-                title: 'Successfully',
-                text: res.data.message
+        if(this.retrieve) {
+            this.$store.dispatch('updatePurse', data).then((res: AxiosResponse) => {
+                this.reference = '';
+                this.description = '';
+                this.status = '';
+                this.$store.commit('SET_PURSE', res.data.data)
+                this.$router.push('/')
+                this.$vs.notification({
+                    color: 'success',
+                    position: 'bottom-center',
+                    title: 'Successfully',
+                    text: res.data.message
+                })
+                this.loading = false;
+            }).catch((err: any) => {
+                this.$vs.notification({
+                    color: 'danger',
+                    position: 'bottom-center',
+                    title: 'Failured',
+                    text: RecordPurseMessage.constructors(err)
+                })
+                this.loading = false;
             })
-            this.loading = false;
-        }).catch((err: any) => {
-            this.$vs.notification({
-                color: 'danger',
-                position: 'bottom-center',
-                title: 'Failured',
-                text: RecordPurseMessage.constructors(err)
+        } else {
+            this.$store.dispatch('recordPurse', data).then((res: AxiosResponse) => {
+                this.reference = '';
+                this.description = '';
+                this.status = '';
+                this.$router.push('/')
+                this.$vs.notification({
+                    color: 'success',
+                    position: 'bottom-center',
+                    title: 'Successfully',
+                    text: res.data.message
+                })
+                this.loading = false;
+            }).catch((err: any) => {
+                this.$vs.notification({
+                    color: 'danger',
+                    position: 'bottom-center',
+                    title: 'Failured',
+                    text: RecordPurseMessage.constructors(err)
+                })
+                this.loading = false;
             })
-            this.loading = false;
-        })
+        }
+    }
+    public created() {
+        if(localStorage.getItem('sst')) {
+            this.$store.dispatch('retrievePurse', localStorage.getItem('sst')).then((res: AxiosResponse) => {
+                this.$store.commit('DETAIL_PURSE', res.data.data)
+                this.id = res.data.data.id
+                this.name = res.data.data.name
+                this.description = res.data.data.description
+                this.status = res.data.data.status
+                this.retrieve = true;
+            }).catch((err: any) => {
+                this.$vs.notification({
+                    color: 'danger',
+                    position: 'bottom-center',
+                    title: 'Failured',
+                    text: err.response.error
+                })
+            })
+        }
     }
 }
 </script>

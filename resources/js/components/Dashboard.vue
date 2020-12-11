@@ -80,7 +80,7 @@
                         <div class="knd-newbie-dropdown" id="knd-newbie-dropdown" :arai-knd-awesome="purse.id">
                             <div class="knd-newbie-dropdown-content">
                               <div>
-                                  Checkout
+                                  Spending
                               </div>
                               <div>
                                   <vs-button>
@@ -88,7 +88,7 @@
                                   </vs-button>
                               </div>
                               <div>
-                                  <vs-button>
+                                  <vs-button v-on:click="onUpdatePurse(purse.id)">
                                       Update
                                   </vs-button>
                               </div>
@@ -126,6 +126,7 @@
 import {Component, Vue} from 'vue-property-decorator'
 import { mapGetters } from 'vuex'
 import $ from 'jquery'
+import { AxiosResponse } from 'axios';
 
 @Component({
     computed: mapGetters(['allPurse'])
@@ -169,6 +170,13 @@ export default class Dashboard extends Vue {
         this.displayPage = newValue
         const check = (document.getElementById('ope-dropdown-active') as HTMLDivElement)
         check.id = "ope-dropdown"
+    }
+    private onUpdatePurse(newValue: number) {
+        this.$store.dispatch('retrievePurse', newValue).then((res: AxiosResponse) => {
+            this.$store.commit('DETAIL_PURSE', res.data.data)
+            localStorage.setItem('sst', res.data.data.id)
+            this.$router.push('/update/purse')
+        })
     }
     public mounted() {
         this.$store.dispatch('fetchPurse')

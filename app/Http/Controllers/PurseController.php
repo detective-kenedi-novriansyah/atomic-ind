@@ -54,7 +54,7 @@ class PurseController extends Controller
     public function store(Request $request)
     {
         $validators = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|min:5',
             'reference' => 'required',
             'description' => 'required|max:100',
         ]);
@@ -98,7 +98,10 @@ class PurseController extends Controller
      */
     public function show($id)
     {
-        //
+        $find = Purse::find($id);
+        return response()->json([
+            'data' => new PurseCollection($find)
+        ]);
     }
 
     /**
@@ -121,7 +124,25 @@ class PurseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validators = Validator::make($request->all(), [
+            'name' => 'required|min:5',
+            'description' => 'required',
+            'status' => 'required'
+        ]);
+        if($validators->fails()) {
+            return response()->json([
+                'message' => $validators->errors()
+            ], 400);
+        }
+        $purse = Purse::find($id);
+        $purse->name = $request->name;
+        $purse->description = $request->description;
+        $purse->status = $request->status;
+        $purse->save();
+        return response()->json([
+            'message' => 'Purse has been updated',
+            'data' => new PurseCollection($purse)
+        ],200);
     }
 
     /**

@@ -121,6 +121,7 @@ export interface FailuredRecordMessage {
             message: {
                 reference: any[];
                 description: any[];
+                name: any[]
             }
         }
     }
@@ -132,6 +133,8 @@ class RecordFailure {
             return type.response.data.message.reference[0]
         } else if(type.response.data.message.description) {
             return type.response.data.message.description[0]
+        } else if(type.response.data.message.name) {
+            return type.response.data.message.name[0]
         }
     }
 }

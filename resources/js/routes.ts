@@ -25,7 +25,8 @@ const routes = [{
     path: '/forgotted/password'
 },{
     component: RecordPurse,
-    path: '/record/purse'
+    path: '/record/purse',
+    alias: ['/record/purse', '/update/purse']
 }]
 
 const router = new VueRouter({
