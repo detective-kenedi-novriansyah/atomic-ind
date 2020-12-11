@@ -14188,6 +14188,7 @@ var Dashboard = /** @class */ (function (_super) {
     __extends(Dashboard, _super);
     function Dashboard() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.displayPage = 5;
         _this.openPage = 0;
         _this.checkPage = 0;
         _this.search = '';
@@ -14222,6 +14223,12 @@ var Dashboard = /** @class */ (function (_super) {
     };
     Dashboard.prototype.onChangeRouter = function (newUrl) {
         this.$router.push(newUrl);
+    };
+    Dashboard.prototype.onChangePerPage = function (newValue) {
+        this.$store.dispatch('fetchPurse', newValue);
+        this.displayPage = newValue;
+        var check = document.getElementById('ope-dropdown-active');
+        check.id = "ope-dropdown";
     };
     Dashboard.prototype.mounted = function () {
         this.$store.dispatch('fetchPurse');
@@ -15345,11 +15352,21 @@ var render = function() {
                 _c(
                   "div",
                   [
-                    _c("vs-button", [
-                      _vm._v(
-                        "\n                              5\n                          "
-                      )
-                    ])
+                    _c(
+                      "vs-button",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.onChangePerPage(5)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                              5\n                          "
+                        )
+                      ]
+                    )
                   ],
                   1
                 ),
@@ -15357,11 +15374,21 @@ var render = function() {
                 _c(
                   "div",
                   [
-                    _c("vs-button", [
-                      _vm._v(
-                        "\n                              10\n                          "
-                      )
-                    ])
+                    _c(
+                      "vs-button",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.onChangePerPage(10)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                              10\n                          "
+                        )
+                      ]
+                    )
                   ],
                   1
                 ),
@@ -15369,11 +15396,21 @@ var render = function() {
                 _c(
                   "div",
                   [
-                    _c("vs-button", [
-                      _vm._v(
-                        "\n                              15\n                          "
-                      )
-                    ])
+                    _c(
+                      "vs-button",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.onChangePerPage(15)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                              15\n                          "
+                        )
+                      ]
+                    )
                   ],
                   1
                 )
@@ -15522,7 +15559,9 @@ var render = function() {
       [
         _c("div", { staticClass: "per_page" }, [
           _vm._v(
-            "\n            showing 1 to 5 of " +
+            "\n            showing 1 to " +
+              _vm._s(_vm.displayPage) +
+              " of " +
               _vm._s(_vm.allPurse.total) +
               " enteris\n        "
           )
@@ -60246,13 +60285,16 @@ var state = {
     active: [],
 };
 var actions = {
-    fetchPurse: function (_a) {
+    fetchPurse: function (_a, params) {
         var commit = _a.commit;
         return __awaiter(this, void 0, void 0, function () {
             var response;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/v1/purse', {
+                            params: {
+                                params: params
+                            },
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Access-Control-Allow-Origin': '*',

@@ -16,9 +16,15 @@ class PurseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Purse::where('status', true)->orderByDesc('id')->paginate(5)->withQueryString();
+        $params = $request->params;
+        if($params) {
+            $data = Purse::where('status', true)->paginate($params)->withQueryString();
+        } else {
+            $data = Purse::where('status', true)->paginate(5)->withQueryString();
+        }
+        
         $result = PurseCollection::collection($data);
         return response()->json([
             'data' => $result,

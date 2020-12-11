@@ -29,8 +29,11 @@ const state: PurseState = {
 }
 
 const actions = {
-    async fetchPurse({commit}: any) {
+    async fetchPurse({commit}: any, params: number) {
         const response = await axios.get('api/v1/purse', {
+            params: {
+                params: params
+            },
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',

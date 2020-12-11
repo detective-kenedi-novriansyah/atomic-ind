@@ -33,17 +33,17 @@
               <div class="knd-newbie-dropdown" id="ope-dropdown">
                     <div class="knd-newbie-dropdown-contents">
                         <div>
-                            <vs-button>
+                            <vs-button v-on:click="onChangePerPage(5)">
                                 5
                             </vs-button>
                         </div>
                         <div>
-                            <vs-button>
+                            <vs-button v-on:click="onChangePerPage(10)">
                                 10
                             </vs-button>
                         </div>
                         <div>
-                            <vs-button>
+                            <vs-button v-on:click="onChangePerPage(15)">
                                 15
                             </vs-button>
                         </div>
@@ -105,7 +105,7 @@
       </table>
       <div class="knd-newbie-table-footer">
           <div class="per_page">
-              showing 1 to 5 of {{allPurse.total}} enteris
+              showing 1 to {{displayPage}} of {{allPurse.total}} enteris
           </div>
           <vs-button-group>
               <vs-button v-on:click="onChangePage(allPurse.prevPageUrl)" :disabled="!Boolean(allPurse.prevPageUrl)">
@@ -131,6 +131,7 @@ import $ from 'jquery'
     computed: mapGetters(['allPurse'])
 })
 export default class Dashboard extends Vue {
+    displayPage: number = 5;
     openPage: number = 0;
     checkPage: number = 0;
     search: string = '';
@@ -162,6 +163,12 @@ export default class Dashboard extends Vue {
     }
     onChangeRouter(newUrl: string) {
         this.$router.push(newUrl)
+    }
+    onChangePerPage(newValue: number) {
+        this.$store.dispatch('fetchPurse', newValue)
+        this.displayPage = newValue
+        const check = (document.getElementById('ope-dropdown-active') as HTMLDivElement)
+        check.id = "ope-dropdown"
     }
     public mounted() {
         this.$store.dispatch('fetchPurse')
