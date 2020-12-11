@@ -13986,7 +13986,7 @@ var Login = /** @class */ (function (_super) {
                 color: 'danger',
                 position: 'bottom-center',
                 title: 'Failured',
-                text: err.response.error
+                text: err.response.data.error
             });
         });
     };
@@ -15683,6 +15683,7 @@ var render = function() {
                 "vs-button",
                 {
                   key: i.links,
+                  attrs: { id: "knd-newbie-pagination" },
                   on: {
                     click: function($event) {
                       return _vm.onChangePage(i.links)
@@ -60408,8 +60409,6 @@ var actions = {
                             maxRedirects: 5,
                             maxContentLength: 2000,
                             validateStatus: function (status) { return status >= 200 && status < 300; }
-                        }).then(function (res) {
-                            commit('LOAD_PURSE', res.data);
                         })];
                     case 1:
                         response = _b.sent();
@@ -60594,8 +60593,9 @@ var actions = {
 var mutations = {
     LOAD_PURSE: function (purse, data) {
         var active_ = data.data.filter(function (x) {
-            return x.status !== 0;
+            return x.status === 1;
         });
+        console.log(active_);
         purse.active = active_;
         purse.allPurse = data.data;
         purse.count = data.count;

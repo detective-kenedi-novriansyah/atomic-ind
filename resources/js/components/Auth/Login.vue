@@ -79,7 +79,7 @@ export default class Login extends Vue {
                 color: 'danger',
                 position: 'bottom-center',
                 title: 'Failured',
-                text: err.response.error
+                text: err.response.data.error
             })
         })
     };

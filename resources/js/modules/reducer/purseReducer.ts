@@ -49,8 +49,6 @@ const actions = {
             maxRedirects: 5,
             maxContentLength: 2000,
             validateStatus: (status: number) => status >= 200 && status < 300
-        }).then((res: AxiosResponse) => {
-            commit('LOAD_PURSE', res.data)
         })
         return response
     },
@@ -173,8 +171,9 @@ const actions = {
 const mutations: PurseMutations = {
     LOAD_PURSE: (purse: PurseState | any, data: PurseData) => {
         const active_ = data.data.filter(function(x: Purse) {
-            return x.status !== 0
+            return x.status === 1
         })
+        console.log(active_)
         purse.active = active_
         purse.allPurse = data.data
         purse.count = data.count;

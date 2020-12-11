@@ -20,9 +20,9 @@ class PurseController extends Controller
     {
         $params = $request->params;
         if($params) {
-            $data = Purse::paginate($params)->withQueryString();
+            $data = Purse::orderBy('name')->paginate($params)->withQueryString();
         } else {
-            $data = Purse::paginate(5)->withQueryString();
+            $data = Purse::orderBy('name')->paginate(5)->withQueryString();
         }
         
         $result = PurseCollection::collection($data);
@@ -126,7 +126,7 @@ class PurseController extends Controller
     {
         $validators = Validator::make($request->all(), [
             'name' => 'required|min:5',
-            'description' => 'required',
+            'description' => 'required|max:100',
             'status' => 'required'
         ]);
         if($validators->fails()) {

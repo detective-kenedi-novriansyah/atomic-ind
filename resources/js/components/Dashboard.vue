@@ -116,7 +116,7 @@
               <vs-button v-on:click="onChangePage(allPurse.prevPageUrl)" :disabled="!Boolean(allPurse.prevPageUrl)">
                   Previous
               </vs-button>
-              <vs-button v-for="i in allPurse.links" :key="i.links" v-on:click="onChangePage(i.links)">
+              <vs-button v-for="i in allPurse.links" :key="i.links" v-on:click="onChangePage(i.links)" id="knd-newbie-pagination">
                   {{i.page}}
               </vs-button>
               <vs-button v-on:click="onChangePage(allPurse.nextPageUrl)" :disabled="!Boolean(allPurse.nextPageUrl)">
