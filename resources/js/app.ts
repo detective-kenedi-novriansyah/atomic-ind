@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui';
 
 Vue.use(Vuesax)
+Vue.use(require('vue-moment'));
 Vue.use(ElementUI)
 Vue.config.productionTip = false;
 

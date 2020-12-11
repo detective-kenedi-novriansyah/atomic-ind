@@ -17,7 +17,9 @@ class Purse extends Model
         "reference",
         "description",
         "status",
-        "user_id"
+        "user_id",
+        "create_at",
+        "update_at"
     ];
 
     public function user_id() {

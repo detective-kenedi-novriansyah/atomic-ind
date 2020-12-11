@@ -1,19 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
-import { User, UserGetters, UserMutations, UserState } from '../types/interface'
+import { User, UserGetters, UserMutations, UserState, UserStateProps } from '../types/interface'
 
-const state: UserState = {
-    user: {
-        id: 0,
-        username: '',
-        email: '',
-        create_at: Date(),
-        update_at: Date(),
-        password: '',
-        confirm_password: ''
-    },
-    allUser: [],
-    token: '',
-}
+const state: UserState = UserStateProps
 
 const actions = {
     async recordUser({commit}: any, data: User) {

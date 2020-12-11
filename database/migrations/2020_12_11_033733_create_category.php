@@ -15,14 +15,13 @@ class CreateCategory extends Migration
     {
         Schema::create('category', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->timestamp('create_at')->nullable();
+            $table->timestamp('update_at')->nullable();
             $table->string('code')->unique();
             $table->text('description');
             $table->string('category');
             $table->decimal('value');
             $table->string('purse');
-            $table->bigInteger('purse_id')->unsigned()->index();
-            $table->foreign('purse_id')->references('id')->on('purse')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

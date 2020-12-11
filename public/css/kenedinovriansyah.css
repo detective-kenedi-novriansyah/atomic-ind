@@ -163,22 +163,28 @@ body {
     padding-right: 0.40rem;
 }
 
-.knd-newbie-header-dash > ul {
+.knd-newbie-header-dash > div {
     list-style-type: none;
     display: flex;
     align-items: center;
+    text-transform: capitalize;
 }
 
-.knd-newbie-header-dash > ul > li {
+.knd-newbie-header-dash > div > div {
     display: inline-block;
 }
 
-.knd-newbie-header-dash > ul:first-child > li > h1 {
+.knd-newbie-header-dash > div:first-child > div > h1 {
     text-transform: uppercase;
     color: gray;
 }
 
-.knd-newbie-header-dash > ul:first-child > li:last-child {
+.knd-newbie-header-dash > div > div:nth-child(2) {
+    margin-right: 0.20rem;
+    margin-left: 0.20rem;
+}
+
+.knd-newbie-header-dash > div:first-child > li:last-child {
     text-transform: capitalize;
     margin-left: 0.40rem;
 }
@@ -191,10 +197,13 @@ table {
 }
 
 table > thead {
-    background-color: white;;
     box-shadow: 0 -2px 5px -2px rgba(0, 0, 0, 0.75);
-    background-color: #1c59f6;
+    background-color: #41b883;
     color: white;
+}
+
+.vs-button {
+    background-color: #41b883! important;
 }
 
 table > thead > tr,
@@ -312,7 +321,7 @@ textarea {
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     margin-bottom: 0.50rem;
 }
 
@@ -349,4 +358,104 @@ textarea {
 
 #knd-newbie-dropdown-active {
     display: block;
+}
+
+.knd-newbie-table {
+    overflow: auto;
+}
+
+.knd-newbie-input-search {
+    width: 200px !important;
+}
+
+@media screen and (max-width: 767px) {
+    .knd-newbie-table-footer {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        flex-direction: column-reverse;
+    }
+    .knd-newbie-table-footer > .per_page {
+        margin-top: 1rem;
+    }
+}
+
+@media screen and (max-width: 538px) {
+    .knd-newbie-header-dash {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+.knd-newbie-grid {
+    display: flex;
+}
+
+.knd-newbie-grid > .knd-newbie-template-grid:last-child {
+    width: 80%;
+    margin-right: 0.20rem;
+}
+.knd-newbie-grid > .knd-newbie-template-grid:first-child {
+    width: 200px;
+    margin-top: 1rem;
+    background-color: white;
+    box-shadow: 0 -2px 5px -2px rgba(0, 0, 0, 0.75);
+    height: 100vh;
+    border-top-right-radius: 4rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-right: 0.50rem;
+}
+
+.knd-newbie-grid > .knd-newbie-template-grid:first-child > .vs-button {
+    width: 100%;
+}
+
+@media screen and (max-width: 791px) {
+    .knd-newbie-table-footer {
+        display: flex;
+        align-items: center;
+        flex-direction: column-reverse;
+    }
+}
+
+
+@media screen and (max-width: 659px) {
+    .knd-newbie-grid > .knd-newbie-template-grid:first-child {
+        position: absolute;
+        left: 0;
+        z-index: 1000;
+        animation-name: kenedi-awesome;
+        animation-duration: 2s;
+        display: none;
+    }
+    .knd-newbie-grid > .knd-newbie-template-grid:last-child {
+        width: 100%;
+        margin: auto;
+    }
+}
+
+@keyframes kenedi-awesome {
+    from {
+        left: -400px;
+    } to {
+        left: 0;
+    }
+}
+
+.knd-newbie-header-transaction {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.knd-newbie-pagination {
+    display: flex;
+    align-items: center;
 }

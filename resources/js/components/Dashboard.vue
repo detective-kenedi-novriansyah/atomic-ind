@@ -1,29 +1,34 @@
 <template>
   <div>
       <div class="knd-newbie-header-dash">
-          <ul>
-              <li>
+          <div>
+              <div>
                   <h1>dompet</h1>
-              </li>
-              <li>
+              </div>
+              <div>
                   -
-              </li>
-              <li>
+              </div>
+              <div>
                   active
-              </li>
-          </ul>
-          <ul>
-              <li>
+              </div>
+          </div>
+          <div>
+              <div>
                   <vs-button v-on:click="onChangeRouter('/record/purse')">
                       Create New
                   </vs-button>
-              </li>
-              <li>
+              </div>
+              <div>
                   <vs-button>
                     Active {{allPurse.active.length}}
                   </vs-button>
-              </li>
-          </ul>
+              </div>
+              <div>
+                  <vs-button icon>
+                      <i class="fas fa-bars"></i>
+                  </vs-button>
+              </div>
+          </div>
       </div>
       <div class="knd-newbie-filter">
           <div>
@@ -50,10 +55,11 @@
                     </div>
               </div>
           </div>
-          <div>
+          <div class="knd-newbie-input-search">
             <vs-input type="text" placeholder="Search" v-model="search"></vs-input>
           </div>
       </div>
+      <div class="knd-newbie-table">
       <table>
           <thead>
               <tr>
@@ -108,16 +114,22 @@
               </tr>
           </tbody>
       </table>
+      </div>
       <div class="knd-newbie-table-footer">
           <div class="per_page">
               showing 1 to {{displayPage}} of {{allPurse.total}} enteris
           </div>
-            <el-pagination
-                @current-change="onChangePage"
-                :current-page.sync="currentPage1"
-                layout="prev, pager, next"
-                :total="allPurse.links.length">
-            </el-pagination>
+          <div class="knd-newbie-pagination">
+              <vs-button v-on:click="onChangePage(allPurse.prevPageUrl)">
+                  <i class="fas fa-arrow-left"></i>
+              </vs-button>
+              <vs-button circle v-for="i in allPurse.links" :key="i.id" v-on:click="onChangePage(i.links)">
+                  {{i.page}}
+              </vs-button>
+                <vs-button v-on:click="onChangePage(allPurse.nextPageUrl)">
+                  <i class="fas fa-arrow-right"></i>
+              </vs-button>
+          </div>
       </div>
   </div>
 </template>
@@ -161,7 +173,9 @@ export default class Dashboard extends Vue {
         // purseActive
     }
     onChangePage(newUrl: number) {
-        this.$store.dispatch('purseGetPage', newUrl)
+        if(newUrl) {
+            this.$store.dispatch('purseGetPage', newUrl)
+        }
     }
     onChangeRouter(newUrl: string) {
         this.$router.push(newUrl)

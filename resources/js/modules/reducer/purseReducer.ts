@@ -1,34 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 import { data } from 'jquery'
-import { Purse, PurseActiveState, PurseData, PurseGetters, PurseMutations, PurseState } from '../types/interface'
+import { Purse, PurseActiveState, PlusData, PurseGetters, PurseMutations, PurseState, PurseStateProps } from '../types/interface'
 
-const state: PurseState = {
-    purse: {
-        id: 0,
-        name: '',
-        reference: '',
-        description: '',
-        create_at: '',
-        update_at: '',
-        status: false,
-        user_id: {
-            id: 0,
-            username: '',
-            email: '',
-            create_at: '',
-            update_at: '',
-            password: '',
-            confirm_password: ''
-        }
-    },
-    allPurse: [],
-    nextPageUrl: '',
-    prevPageUrl: '',
-    total: 0,
-    count: 0,
-    links: [],
-    active: [],
-}
+const state: PurseState = PurseStateProps
 
 const actions = {
     async fetchPurse({commit}: any, params: number) {
@@ -55,10 +29,7 @@ const actions = {
         return response
     },
     async purseGetPage({commit}: any, newUrl: string) {
-        const response = await axios.get('api/v1/purse/', {
-            params: {
-                page: newUrl
-            },
+        const response = await axios.get(newUrl, {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -174,7 +145,7 @@ const actions = {
 }
 
 const mutations: PurseMutations = {
-    LOAD_PURSE: (purse: PurseState | any, data: PurseData) => {
+    LOAD_PURSE: (purse: PurseState | any, data: PlusData) => {
         const active_ = data.data.filter(function(x: Purse) {
             return x.status === 1
         })
@@ -184,7 +155,10 @@ const mutations: PurseMutations = {
         const set = Object.keys(data.links).length
         const createArray = []
         for(let i = 1; i < set + 1; i++) {
-            createArray.push(data.links[i])
+            createArray.push({
+                'links': data.links[i],
+                'page': i
+            })
 
         }
         purse.total = data.total

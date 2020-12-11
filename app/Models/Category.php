@@ -16,8 +16,10 @@ class Category extends Model
         'code',
         'description',
         'value',
-        'purse_id',
         'user_id',
+        'create_at',
+        'update_at',
         'purse'
     ];
+    public $timestamps = false;
 }

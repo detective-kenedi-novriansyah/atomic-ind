@@ -1,19 +1,17 @@
 <template>
     <div>
-        <div class="knd-newbie-header-dash">
-          <ul>
-              <li>
+      <div class="knd-newbie-header-dash">
+          <div>
+              <div>
                   <h1>dompet</h1>
-              </li>
-              <li>
+              </div>
+              <div>
                   -
-              </li>
-              <li>
-                  Create New
-              </li>
-          </ul>
-          <ul>
-          </ul>
+              </div>
+              <div>
+                  active
+              </div>
+          </div>
       </div>
         <form v-on:submit.prevent="onSubmit" class="knd-newbie-container" id="knd-newbie-record">
             <div class="knd-newbie-field-group">

@@ -1,7 +1,19 @@
 <template>
     <div id="app">
         <Navbar></Navbar>
-        <router-view></router-view>
+        <div class="knd-newbie-grid">
+            <div class="knd-newbie-template-grid">
+                <vs-button v-on:click="onChangeRouter('/dashboard')">
+                    Master Purse
+                </vs-button>
+                <vs-button v-on:click="onChangeRouter('/transaction')">
+                    Transaction
+                </vs-button>
+            </div>
+            <div class="knd-newbie-template-grid">
+                <router-view></router-view>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -15,6 +27,9 @@ import { Component, Vue } from 'vue-property-decorator'
     }
 })
 export default class Base extends Vue {
+    onChangeRouter(newValue: string) {
+        this.$router.push(newValue)
+    }
     public mounted() {
         if(localStorage.getItem('token')) {
             this.$store.dispatch('me')

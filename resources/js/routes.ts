@@ -5,6 +5,8 @@ import Login from './components/Auth/Login.vue'
 import Register from './components/Auth/Register.vue'
 import Forgotted from './components/Auth/Forgotted.vue'
 import RecordPurse from './components/Purse/Record.vue'
+import RecordCategory from './components/Category/Record.vue'
+import Transaction from './components/screen/Transaction.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +29,13 @@ const routes = [{
     component: RecordPurse,
     path: '/record/purse',
     alias: ['/record/purse', '/update/purse']
+},{
+    component: RecordCategory,
+    path: '/record/category',
+    alias: ['/record/category', '/retrieve/category']
+},{
+    component: Transaction,
+    path: '/transaction'
 }]
 
 const router = new VueRouter({

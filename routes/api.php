@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PurseController;
 
 /*
@@ -44,3 +45,5 @@ Route::post('v1/purse/active/{purse}', [PurseController::class, 'active'])->name
 Route::put('v1/purse/{purse}', [PurseController::class, 'update'])->name('update');
 Route::delete('v1/purse/{purse}', [PurseController::class, 'destroy'])->name('destroy');
 Route::get('v1/purse/{purse}', [PurseController::class, 'show'])->name('detail');
+
+Route::resource("v1/category", CategoryController::class);

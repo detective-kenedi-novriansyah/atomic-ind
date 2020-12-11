@@ -8,6 +8,20 @@ export interface User {
     confirm_password: string;
 }
 
+export const UserStateProps = {
+    user: {
+        id: 0,
+        username: '',
+        email: '',
+        create_at: Date(),
+        update_at: Date(),
+        password: '',
+        confirm_password: ''
+    },
+    allUser: [],
+    token: '',
+}
+
 export interface Purse {
     id: number;
     name: string;
@@ -17,6 +31,92 @@ export interface Purse {
     create_at: any;
     update_at: any;
     user_id: User;
+}
+
+export const PurseStateProps = {
+    purse: {
+        id: 0,
+        name: '',
+        reference: '',
+        description: '',
+        create_at: '',
+        update_at: '',
+        status: false,
+        user_id: {
+            id: 0,
+            username: '',
+            email: '',
+            create_at: '',
+            update_at: '',
+            password: '',
+            confirm_password: ''
+        }
+    },
+    allPurse: [],
+    nextPageUrl: '',
+    prevPageUrl: '',
+    total: 0,
+    count: 0,
+    links: [],
+    active: [],
+}
+
+export interface Category {
+    id: number;
+    code: string;
+    description: string;
+    category: string;
+    value: string;
+    user_id: User;
+    purse_id: Purse;
+    create_at: any;
+    update_at: any;
+}
+
+export const CategoryStateProps = {
+    category: {
+        id: 0,
+        code: '',
+        description: '',
+        category: '',
+        value: '',
+        create_at: '',
+        update_at: '',
+        purse_id: {
+            id: 0,
+            name: '',
+            reference: '',
+            description: '',
+            status: false,
+            create_at: '',
+            update_at: '',
+            user_id: {
+                id: 0,
+                username: '',
+                email: '',
+                password: '',
+                create_at: '',
+                update_at: '',
+                confirm_password: '',
+            },
+        },
+        user_id: {
+            id: 0,
+            username: '',
+            email: '',
+            password: '',
+            create_at: '',
+            update_at: '',
+            confirm_password: '',
+        }
+    },
+    allCategory: [],
+    nextPageUrl: '',
+    prevPageUrl: '',
+    total: 0,
+    count: 0,
+    links: [],
+    active: [],
 }
 
 export interface UserState {
@@ -40,20 +140,39 @@ export interface PurseState {
     readonly links: CustomLinks[]
 }
 
+export interface CategoryState {
+    readonly category: Category;
+    readonly allCategory: Category[];
+    readonly active: Purse[];
+    readonly nextPageUrl: string;
+    readonly prevPageUrl: string;
+    readonly total: number;
+    readonly count: number;
+    readonly links: CustomLinks[]
+}
+
 export interface UserMutations {
-    [x: string] : (user: UserState, data: any) => void;
+    [x: string] : (us: UserState, data: any) => void;
 }
 
 export interface UserGetters {
-    [x: string] : (user: UserState, data: any) => void;
+    [x: string] : (us: UserState, data: any) => void;
 }
 
 export interface PurseMutations {
-    [xy: string] : (purse: PurseState, data: any) => void;
+    [xy: string] : (jp: PurseState, data: any) => void;
 }
 
 export interface PurseGetters {
-    [xy: string] : (purse: PurseState, data: any) => void;
+    [xy: string] : (jp: PurseState, data: any) => void;
+}
+
+export interface CategoryMutations {
+    [o: string] : (xp: CategoryState, data: any) => void;
+}
+
+export interface CategoryGetters {
+    [o: string] : (xp: CategoryState, data: any) => void;
 }
 
 export interface FailuredMessage {
@@ -91,7 +210,7 @@ interface Links {
     url: string;
 }
 
-export interface PurseData {
+export interface PlusData {
     current_page: number;
     data: [Purse];
     first_page_url: string;
@@ -140,3 +259,32 @@ class RecordFailure {
 }
 
 export const RecordPurseMessage = new RecordFailure()
+
+export interface CategoryFailure {
+    response: {
+        data: {
+            message: {
+                code: any[];
+                description: any[];
+                value: any[]
+                category: any[]
+            }
+        }
+    }
+}
+
+class CategoryRecordFailure {
+    constructors(type: CategoryFailure) {
+        if(type.response.data.message.code) {
+            return type.response.data.message.code[0]
+        } else if(type.response.data.message.description) {
+            return type.response.data.message.description[0]
+        } else if(type.response.data.message.value) {
+            return type.response.data.message.value[0]
+        } else if(type.response.data.message.category) {
+            return type.response.data.message.category[0]
+        }
+    }
+}
+
+export const CategoryFailure = new CategoryRecordFailure()

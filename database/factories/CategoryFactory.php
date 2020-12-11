@@ -30,12 +30,13 @@ class CategoryFactory extends Factory
             $display = $display . 0;
         }
         return [
-            'code' => $display . rand(0,100000),
+            'code' => 'WNI'. $display . rand(0,100000),
             'description' => $this->faker->text,
             'category' => $this->faker->name,
             'purse' => $this->faker->name,
+            "create_at" => $this->faker->dateTime($max = 'now', $timezone = null),
+            "update_at" => $this->faker->dateTime($max = 'now', $timezone = null),
             'value' => $this->faker->numberBetween($min = 1000, $max = 900000),
-            'purse_id' => Purse::all()->random()->id,
             'user_id' => User::all()->random()->id,
         ];
     }
