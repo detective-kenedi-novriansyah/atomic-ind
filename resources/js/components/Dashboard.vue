@@ -27,7 +27,7 @@
       </div>
       <div class="knd-newbie-filter">
           <div>
-              <vs-button id="opendropdown">
+              <vs-button id="opendropdown" v-on:click="onClickDropdown()">
                   {{allPurse.count}} / Page
               </vs-button>
               <div class="knd-newbie-dropdown" id="ope-dropdown">
@@ -74,7 +74,7 @@
                   <td v-if="purse.status">Active</td>
                   <td v-else>Inactive</td>
                     <td class="knd-newbie-opx">
-                        <vs-button :aria-kenedi-awesome="purse.id" class="knd-newbie-onclick-dropdown">
+                        <vs-button :aria-kenedi-awesome="purse.id" class="knd-newbie-onclick-dropdown" v-on:click="onClickDropdownTable(purse.id)">
                           <i class="fas fa-arrow-down"></i>
                         </vs-button>
                         <div class="knd-newbie-dropdown" id="knd-newbie-dropdown" :arai-knd-awesome="purse.id">
@@ -132,6 +132,7 @@ import $ from 'jquery'
 })
 export default class Dashboard extends Vue {
     openPage: number = 0;
+    checkPage: number = 0;
     search: string = '';
     $vs: any;
     onClickActive(pk: number, status: number) {
@@ -164,6 +165,35 @@ export default class Dashboard extends Vue {
     }
     public mounted() {
         this.$store.dispatch('fetchPurse')
+    }
+    private onClickDropdown() {
+        const check = (document.getElementById('ope-dropdown-active') as HTMLDivElement)
+        const inactive = (document.getElementById('ope-dropdown') as HTMLDivElement)
+        if(check) {
+            check.id = 'ope-dropdown'
+        } else if(inactive) {
+            inactive.id = 'ope-dropdown-active'
+        }
+    }
+    private onClickDropdownTable(newAttr: number) {
+        if(this.openPage) {
+            if(this.checkPage === newAttr) {
+                const attrs = $(`div[arai-knd-awesome=${newAttr}]`)
+                attrs.fadeOut('slow')
+                this.openPage -= 1
+            } else {
+                const old_attrs = $(`div[arai-knd-awesome=${this.checkPage}]`)
+                old_attrs.fadeOut('slow')
+                const attrs = $(`div[arai-knd-awesome=${newAttr}]`)
+                this.checkPage = newAttr
+                attrs.fadeIn('slow')
+            }
+        } else {
+            this.openPage += 1
+            this.checkPage = newAttr;
+            const attrs = $(`div[arai-knd-awesome=${newAttr}]`)
+            attrs.fadeIn('slow')
+        }
     }
 }
 </script>

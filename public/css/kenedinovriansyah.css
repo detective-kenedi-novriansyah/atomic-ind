@@ -255,6 +255,10 @@ table > tbody > tr:hover {
 
 .knd-newbie-dropdown {
     /* display: none; */
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    margin-top: 2.5rem;
 }
 
 .knd-newbie-dropdown > .knd-newbie-dropdown-content {
@@ -317,11 +321,15 @@ textarea {
 }
 
 #ope-dropdown {
+    display: none;
+}
+
+#ope-dropdown-active {
     position: absolute;
     width: 80px;
+    display: none;
     display: flex;
     align-items: center;
-    display: none;
     justify-content: center;
     flex-direction: column;
     padding: 0 !important;
@@ -330,7 +338,6 @@ textarea {
 .knd-newbie-dropdown > .knd-newbie-dropdown-contents {
     /* position: absolute; */
     right: 0;
-    z-index: 1000;
     list-style-type: none;
     display: flex;
     align-items: center;
@@ -338,4 +345,8 @@ textarea {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 -2px 5px -2px rgba(0, 0, 0, 0.75);
+}
+
+#knd-newbie-dropdown-active {
+    display: block;
 }
