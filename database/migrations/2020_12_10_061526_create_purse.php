@@ -16,6 +16,7 @@ class CreatePurse extends Migration
         Schema::create('purse', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('name')->unique();
             $table->boolean('status');
             $table->string('reference');
             $table->text('description');

@@ -22,6 +22,7 @@ class PurseFactory extends Factory
     public function definition()
     {
         return [
+            'name' => $this->faker->name,
             'user_id' => \App\Models\User::all()->random()->id,
             'status' => $this->faker->boolean(100),
             'reference' => rand(999999,9999999),
