@@ -14230,6 +14230,25 @@ var Dashboard = /** @class */ (function (_super) {
         var check = document.getElementById('ope-dropdown-active');
         check.id = "ope-dropdown";
     };
+    Dashboard.prototype.onDeletePurse = function (value) {
+        var _this = this;
+        this.$store.dispatch('destroyPurse', value).then(function (res) {
+            _this.$store.commit('DESTROY_PURSE', value);
+            _this.$vs.notification({
+                color: 'success',
+                position: 'bottom-center',
+                title: 'Successfully',
+                text: res.data.message
+            });
+        }).catch(function (err) {
+            _this.$vs.notification({
+                color: 'danger',
+                position: 'bottom-center',
+                title: 'Failured',
+                text: err.response.data.detail
+            });
+        });
+    };
     Dashboard.prototype.onUpdatePurse = function (newValue) {
         var _this = this;
         this.$store.dispatch('retrievePurse', newValue).then(function (res) {
@@ -15601,9 +15620,17 @@ var render = function() {
                               }
                             },
                             [
-                              _vm._v(
-                                "\n                                    Inactive\n                                "
-                              )
+                              purse.status
+                                ? _c("span", [
+                                    _vm._v(
+                                      "\n                                        Inactive\n                                    "
+                                    )
+                                  ])
+                                : _c("span", [
+                                    _vm._v(
+                                      "\n                                        Active\n                                    "
+                                    )
+                                  ])
                             ]
                           )
                         ],
@@ -16043,7 +16070,7 @@ var render = function() {
                   _vm._v("\n      Active\n    ")
                 ]),
                 _vm._v(" "),
-                _c("vs-option", { attrs: { label: "Inactive", value: "2" } }, [
+                _c("vs-option", { attrs: { label: "Inactive", value: "0" } }, [
                   _vm._v("\n      Inactive\n    ")
                 ])
               ],
@@ -60514,6 +60541,34 @@ var actions = {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("api/v1/purse/" + newData.id, newData, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*',
+                                'Access-Control-Allow-Methods': 'PUT',
+                                'Access-Control-Allow-Headers': 'Content-Type, Origin, Accept, Authorization, X-Requested-With',
+                                'Authorization': "Bearer " + localStorage.getItem('token')
+                            },
+                            timeout: 865000,
+                            responseType: 'json',
+                            withCredentials: false,
+                            maxRedirects: 5,
+                            maxContentLength: 2000,
+                            validateStatus: function (status) { return status >= 200 && status < 300; }
+                        })];
+                    case 1:
+                        response = _b.sent();
+                        return [2 /*return*/, response];
+                }
+            });
+        });
+    },
+    destroyPurse: function (_a, newData) {
+        var commit = _a.commit;
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_0___default.a.delete("api/v1/purse/" + newData.id, {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Access-Control-Allow-Origin': '*',

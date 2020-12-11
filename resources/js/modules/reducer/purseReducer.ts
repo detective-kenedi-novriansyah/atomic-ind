@@ -149,6 +149,25 @@ const actions = {
         })
         return response
     },
+    async destroyPurse({commit}: any, newData: Purse) {
+        const response = await axios.delete(`api/v1/purse/${newData.id}`,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'PUT',
+                'Access-Control-Allow-Headers': 'Content-Type, Origin, Accept, Authorization, X-Requested-With',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            timeout: 865000,
+            responseType: 'json',
+            withCredentials: false,
+            maxRedirects: 5,
+            maxContentLength: 2000,
+            validateStatus: (status: number) => status >= 200 && status < 300
+        })
+        return response
+    },
 }
 
 const mutations: PurseMutations = {

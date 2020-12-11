@@ -94,7 +94,12 @@
                               </div>
                               <div>
                                   <vs-button v-on:click="onClickActive(purse.id,purse.status)">
-                                      Inactive
+                                      <span v-if="purse.status">
+                                          Inactive
+                                      </span>
+                                      <span v-else>
+                                          Active
+                                      </span>
                                   </vs-button>
                               </div>
                           </div>
@@ -170,6 +175,24 @@ export default class Dashboard extends Vue {
         this.displayPage = newValue
         const check = (document.getElementById('ope-dropdown-active') as HTMLDivElement)
         check.id = "ope-dropdown"
+    }
+    private onDeletePurse(value: number) {
+        this.$store.dispatch('destroyPurse', value).then((res: AxiosResponse) => {
+            this.$store.commit('DESTROY_PURSE', value)
+            this.$vs.notification({
+                color: 'success',
+                position: 'bottom-center',
+                title: 'Successfully',
+                text: res.data.message
+            })
+        }).catch((err: any) => {
+            this.$vs.notification({
+                color: 'danger',
+                position: 'bottom-center',
+                title: 'Failured',
+                text: err.response.data.detail
+            })
+        })
     }
     private onUpdatePurse(newValue: number) {
         this.$store.dispatch('retrievePurse', newValue).then((res: AxiosResponse) => {

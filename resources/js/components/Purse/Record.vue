@@ -38,7 +38,7 @@
         <vs-option label="Active" value="1">
           Active
         </vs-option>
-        <vs-option label="Inactive" value="2">
+        <vs-option label="Inactive" value="0">
           Inactive
         </vs-option>
       </vs-select>

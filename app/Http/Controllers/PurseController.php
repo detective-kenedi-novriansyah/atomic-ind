@@ -20,9 +20,9 @@ class PurseController extends Controller
     {
         $params = $request->params;
         if($params) {
-            $data = Purse::where('status', true)->paginate($params)->withQueryString();
+            $data = Purse::paginate($params)->withQueryString();
         } else {
-            $data = Purse::where('status', true)->paginate(5)->withQueryString();
+            $data = Purse::paginate(5)->withQueryString();
         }
         
         $result = PurseCollection::collection($data);
@@ -153,6 +153,11 @@ class PurseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $find = Purse::find($id);
+        $find->status = 0;
+        $find->save();
+        return response()->json([
+            'message' => 'Purse has been deleted'
+        ],200);
     }
 }
