@@ -14,7 +14,7 @@
           </div>
           <div>
               <div>
-                  <vs-button v-on:click="onChangeRouter('/record/purse')">
+                  <vs-button v-on:click="onChangeRouter('/record/category')">
                       Create New
                   </vs-button>
               </div>

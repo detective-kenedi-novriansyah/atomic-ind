@@ -20,9 +20,9 @@ class CategoryController extends Controller
     {
         $params = $request->params;
         if($params) {
-            $data = Category::orderBy('code')->paginate($params)->withQueryString();
+            $data = Category::orderBy('create_at')->paginate($params)->withQueryString();
         } else {
-            $data = Category::orderBy('code')->paginate(5)->withQueryString();
+            $data = Category::orderBy('create_at')->paginate(5)->withQueryString();
         }
         
         $result = CategoryResource::collection($data);
@@ -43,7 +43,14 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+    }
+
+    public function last()
+    {
+        $category = Category::orderByDesc('id')->first();
+        return response()->json([
+            'data' => new CategoryResource(($category))
+        ]);
     }
 
     /**
@@ -64,7 +71,7 @@ class CategoryController extends Controller
         if($validators->fails()) {
             return response()->json([
                 'message' => $validators->errors()
-            ]);
+            ],400);
         };
         $create = Category::create([
             'code' => $request->code,
@@ -72,13 +79,13 @@ class CategoryController extends Controller
             'category' => $request->category,
             'value' => $request->value,
             'purse' => $request->purse,
-            'user_id' => User::find($request->user_id),
+            'user_id' => User::find($request->user_id)->id,
         ]);
         $create->save();
         return response()->json([
             'data' => $create,
             'message' => 'Category has been created'
-        ]);
+        ],201);
     }
 
     /**

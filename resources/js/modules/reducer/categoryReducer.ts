@@ -46,7 +46,43 @@ const actions = {
             commit('LOAD_CATEGORY', res.data)
         })
         return response
-    }
+    },
+    async loadLastCategory({commit}: any) {
+        const response = await axios.get('api/v1/category/last', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET',
+                'Access-Control-Allow-Headers': 'Content-Type, Origin, Accept, Authorization, X-Requested-With',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            timeout: 865000,
+            responseType: 'json',
+            withCredentials: false,
+            maxRedirects: 5,
+            maxContentLength: 2000,
+            validateStatus: (status: number) => status >= 200 && status < 300
+        })
+        return response
+    },
+    async createCategory({commit}: any, data: Category) {
+        const response = await axios.post('api/v1/category', data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST',
+                'Access-Control-Allow-Headers': 'Content-Type, Origin, Accept, Authorization, X-Requested-With',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            timeout: 865000,
+            responseType: 'json',
+            withCredentials: false,
+            maxRedirects: 5,
+            maxContentLength: 2000,
+            validateStatus: (status: number) => status >= 201 && status < 300
+        })
+        return response
+    },
 }
 
 const mutations: CategoryMutations = {
@@ -68,10 +104,13 @@ const mutations: CategoryMutations = {
         c.prevPageUrl = data.prevPageUrl
         return;
     },
+    LOAD_CATEGORY_DETAIL: (c: CategoryState | any, data: Category) => (c.category = data),
+    FETCH_NEW_DATA: (lx: CategoryState, data: any) => (lx.allCategory.unshift(data))
 }
 
 const getters: CategoryGetters = {
-    loadCategory: (cx: CategoryState) => cx
+    loadCategory: (cx: CategoryState) => cx,
+    category: (x: CategoryState) => x.category,
 }
 
 export default {

@@ -459,3 +459,16 @@ textarea {
     display: flex;
     align-items: center;
 }
+
+.knd-select {
+    width: 100% !important;
+}
+
+.knd-newbie-field-groups {
+    display: flex;
+    align-items: center;
+}
+
+.knd-newbie-field-groups > .knd-newbie-field {
+    margin-right: 0.50rem;
+}

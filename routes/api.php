@@ -46,4 +46,11 @@ Route::put('v1/purse/{purse}', [PurseController::class, 'update'])->name('update
 Route::delete('v1/purse/{purse}', [PurseController::class, 'destroy'])->name('destroy');
 Route::get('v1/purse/{purse}', [PurseController::class, 'show'])->name('detail');
 
-Route::resource("v1/category", CategoryController::class);
+
+Route::get('v1/category', [CategoryController::class, 'index']);
+Route::get('v1/category/last', [CategoryController::class, 'last']);
+Route::post('v1/category', [CategoryController::class, 'store']);
+Route::post('v1/category/active/{category}', [CategoryController::class, 'active']);
+Route::put('v1/category/{category}', [CategoryController::class, 'update']);
+Route::delete('v1/category/{category}', [CategoryController::class, 'destroy']);
+Route::get('v1/category/{category}', [CategoryController::class, 'show']);
