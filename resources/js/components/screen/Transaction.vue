@@ -9,23 +9,13 @@
                   -
               </div>
               <div>
-                  active
+                  out
               </div>
           </div>
           <div>
               <div>
                   <vs-button v-on:click="onChangeRouter('/record/purse')">
                       Create New
-                  </vs-button>
-              </div>
-              <div>
-                  <vs-button>
-                    Active {{loadCategory.active.length}}
-                  </vs-button>
-              </div>
-              <div>
-                  <vs-button icon>
-                      <i class="fas fa-bars"></i>
                   </vs-button>
               </div>
           </div>
@@ -149,7 +139,7 @@ export default class Transaction extends Vue {
         this.$router.push(newUrl)
     }
     onChangePerPage(newValue: number) {
-        this.$store.dispatch('fetchPurse', newValue)
+        this.$store.dispatch('fetchCategory', newValue)
         this.displayPage = newValue
         const check = (document.getElementById('ope-dropdown-active') as HTMLDivElement)
         check.id = "ope-dropdown"
