@@ -112,17 +112,12 @@
           <div class="per_page">
               showing 1 to {{displayPage}} of {{allPurse.total}} enteris
           </div>
-          <vs-button-group>
-              <vs-button v-on:click="onChangePage(allPurse.prevPageUrl)" :disabled="!Boolean(allPurse.prevPageUrl)">
-                  Previous
-              </vs-button>
-              <vs-button v-for="i in allPurse.links" :key="i.links" v-on:click="onChangePage(i.links)" id="knd-newbie-pagination">
-                  {{i.page}}
-              </vs-button>
-              <vs-button v-on:click="onChangePage(allPurse.nextPageUrl)" :disabled="!Boolean(allPurse.nextPageUrl)">
-                  Next
-              </vs-button>
-          </vs-button-group>
+            <el-pagination
+                @current-change="onChangePage"
+                :current-page.sync="currentPage1"
+                layout="prev, pager, next"
+                :total="allPurse.links.length">
+            </el-pagination>
       </div>
   </div>
 </template>
@@ -138,6 +133,7 @@ import { AxiosResponse } from 'axios';
 })
 export default class Dashboard extends Vue {
     displayPage: number = 5;
+    currentPage1 = 1;
     openPage: number = 0;
     checkPage: number = 0;
     search: string = '';
@@ -164,7 +160,7 @@ export default class Dashboard extends Vue {
         })
         // purseActive
     }
-    onChangePage(newUrl: string) {
+    onChangePage(newUrl: number) {
         this.$store.dispatch('purseGetPage', newUrl)
     }
     onChangeRouter(newUrl: string) {
@@ -203,6 +199,7 @@ export default class Dashboard extends Vue {
     }
     public mounted() {
         this.$store.dispatch('fetchPurse')
+
     }
     private onClickDropdown() {
         const check = (document.getElementById('ope-dropdown-active') as HTMLDivElement)

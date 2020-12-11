@@ -49,11 +49,16 @@ const actions = {
             maxRedirects: 5,
             maxContentLength: 2000,
             validateStatus: (status: number) => status >= 200 && status < 300
+        }).then((res: AxiosResponse) => {
+            commit('LOAD_PURSE', res.data)
         })
         return response
     },
     async purseGetPage({commit}: any, newUrl: string) {
-        const response = await axios.get(newUrl, {
+        const response = await axios.get('api/v1/purse/', {
+            params: {
+                page: newUrl
+            },
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -173,14 +178,14 @@ const mutations: PurseMutations = {
         const active_ = data.data.filter(function(x: Purse) {
             return x.status === 1
         })
-        console.log(active_)
         purse.active = active_
         purse.allPurse = data.data
         purse.count = data.count;
         const set = Object.keys(data.links).length
         const createArray = []
         for(let i = 1; i < set + 1; i++) {
-            createArray.push({'links': data.links[i],'page': data.links[i].split('page=')[1]})
+            createArray.push(data.links[i])
+
         }
         purse.total = data.total
         purse.links = createArray

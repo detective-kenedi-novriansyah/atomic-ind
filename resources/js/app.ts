@@ -4,8 +4,11 @@ import routes from './routes'
 import store from './modules'
 import Vuesax from 'vuesax'
 import 'vuesax/dist/vuesax.css' //Vuesax styles
+import 'element-ui/lib/theme-chalk/index.css';
+import ElementUI from 'element-ui';
 
 Vue.use(Vuesax)
+Vue.use(ElementUI)
 Vue.config.productionTip = false;
 
 const app = new Vue({

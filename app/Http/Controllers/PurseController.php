@@ -30,7 +30,7 @@ class PurseController extends Controller
             'data' => $result,
             'nextPageUrl' => $data->nextPageUrl(),
             "prevPageUrl" => $data->previousPageUrl(),
-            "links" => $data->getUrlRange(1,$data->total() / $data->count()),
+            "links" => $data->getUrlRange($data->currentPage(),$data->total() / $data->count()),
             'count' => $data->count(),
             "total" => $data->total(),
         ]);
